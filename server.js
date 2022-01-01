@@ -2,7 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
-
+const colors = require('colors')
 // ConectDB
 
 // Route file
@@ -27,12 +27,14 @@ app.use('/api/v1/bootcamps', bootcamps)
 
 const PORT = process.env.PORT
 const server = app.listen(PORT, () => {
-  console.log(`server is running in ${process.env.NODE_ENV} on  PORT ${PORT}`)
+  console.log(
+    `server is running in ${process.env.NODE_ENV} on  PORT ${PORT}`.yellow.bold
+  )
 })
 
 // Handle unhandle promise rejections
 process.on('unhandledRejection', (err, promise) => {
-  console.log(`Error: ${err.message} `)
+  console.log(`Error: ${err.message} `.red)
   //   Close server &
   server.close(() => {
     process.exit(1)
