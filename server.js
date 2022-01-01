@@ -3,6 +3,8 @@ const dotenv = require('dotenv')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
 const colors = require('colors')
+const errorHandler = require('./middlewre/error')
+
 // ConectDB
 
 // Route file
@@ -14,7 +16,6 @@ const bootcamps = require('./routes/bootcamps')
 connectDB()
 
 const app = express()
-
 // Dev logging middleware
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'))
@@ -24,6 +25,8 @@ if (process.env.NODE_ENV === 'development') {
 app.use(express.json())
 // Moun router
 app.use('/api/v1/bootcamps', bootcamps)
+// middleware
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 const server = app.listen(PORT, () => {
